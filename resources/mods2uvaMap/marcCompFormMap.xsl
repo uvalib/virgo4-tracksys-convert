@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
+
+  <!-- MARC Form of Composition Code List, November 2016 -->
+  <xsl:variable name="compFormMap">
+    <compForm term="Anthems">an</compForm>
+    <compForm term="Ballads">bd</compForm>
+    <compForm term="Bluegrass music">bg</compForm>
+    <compForm term="Blues">bl</compForm>
+    <compForm term="Ballets">bt</compForm>
+    <compForm term="Chaconnes">ca</compForm>
+    <compForm term="Chants, Other religions">cb</compForm>
+    <compForm term="Chant, Christian">cc</compForm>
+    <compForm term="Concerti grossi">cg</compForm>
+    <compForm term="Chorales">ch</compForm>
+    <compForm term="Chorale preludes">cl</compForm>
+    <compForm term="Canons and rounds">cn</compForm>
+    <compForm term="Concertos">co</compForm>
+    <compForm term="Chansons, polyphonic">cp</compForm>
+    <compForm term="Carols">cr</compForm>
+    <compForm term="Chance compositions">cs</compForm>
+    <compForm term="Cantatas">ct</compForm>
+    <compForm term="Country music">cy</compForm>
+    <compForm term="Canzonas">cz</compForm>
+    <compForm term="Dance forms">df</compForm>
+    <compForm term="Divertimentos, serenades, cassations, divertissements, and notturni"
+      >dv</compForm>
+    <compForm term="Fugues">fg</compForm>
+    <compForm term="Flamenco">fl</compForm>
+    <compForm term="Folk music">fm</compForm>
+    <compForm term="Fantasias">ft</compForm>
+    <compForm term="Gospel music">gm</compForm>
+    <compForm term="Hymns">hy</compForm>
+    <compForm term="Jazz">jz</compForm>
+    <compForm term="Musical revues and comedies">mc</compForm>
+    <compForm term="Madrigals">md</compForm>
+    <compForm term="Minuets">mi</compForm>
+    <compForm term="Motets">mo</compForm>
+    <compForm term="Motion picture music">mp</compForm>
+    <compForm term="Marches">mr</compForm>
+    <compForm term="Masses">ms</compForm>
+    <compForm term="Multiple forms">mu</compForm>
+    <compForm term="Mazurkas">mz</compForm>
+    <compForm term="Nocturnes">nc</compForm>
+    <compForm term="Not applicable">nn</compForm>
+    <compForm term="Operas">op</compForm>
+    <compForm term="Oratorios">or</compForm>
+    <compForm term="Overtures">ov</compForm>
+    <compForm term="Program music">pg</compForm>
+    <compForm term="Passion music">pm</compForm>
+    <compForm term="Polonaises">po</compForm>
+    <compForm term="Popular music">pp</compForm>
+    <compForm term="Preludes">pr</compForm>
+    <compForm term="Passacaglias">ps</compForm>
+    <compForm term="Part-songs">pt</compForm>
+    <compForm term="Pavans">pv</compForm>
+    <compForm term="Rock music">rc</compForm>
+    <compForm term="Rondos">rd</compForm>
+    <compForm term="Ragtime music">rg</compForm>
+    <compForm term="Ricercars">ri</compForm>
+    <compForm term="Rhapsodies">rp</compForm>
+    <compForm term="Requiems">rq</compForm>
+    <compForm term="Square dance music">sd</compForm>
+    <compForm term="Songs">sg</compForm>
+    <compForm term="Sonatas">sn</compForm>
+    <compForm term="Symphonic poems">sp</compForm>
+    <compForm term="Studies and exercises">st</compForm>
+    <compForm term="Suites">su</compForm>
+    <compForm term="Symphonies">sy</compForm>
+    <compForm term="Toccatas">tc</compForm>
+    <compForm term="Teatro lirico">tl</compForm>
+    <compForm term="Trio-sonatas">ts</compForm>
+    <compForm term="Unknown">uu</compForm>
+    <compForm term="Villancicos">vi</compForm>
+    <compForm term="Variations">vr</compForm>
+    <compForm term="Waltzes">wz</compForm>
+    <compForm term="Zarzuelas">za</compForm>
+    <compForm term="Other">zz</compForm>
+  </xsl:variable>
+</xsl:stylesheet>

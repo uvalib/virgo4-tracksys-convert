@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="Tracksys_SQS_Adapter">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="SQSReader.classpath">
+        <fileset dir="lib">                                                                                                                         
+            <include name="**/*.jar" />                                                                                                          
+        </fileset>                                                                                                                                   
+        <fileset dir="lib_aws">                                                                                                                          
+            <include name="**/*.jar" />                                                                                                          
+        </fileset>                                                                                                                                   
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <mkdir dir="dist"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    
+    <target depends="clean" name="cleanall"/>
+    <target depends="compile,jar" name="build"/>
+
+    <target depends="init" name="compile">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="SQSReader.classpath"/>
+        </javac>
+    </target>
+    
+    <target description="build jar" name="jar" depends="compile">
+        <jar destfile="dist/sqs_tracksys.jar">
+            <manifest>
+                <attribute name="Main-Class" value="edu.virginia.lib.sqsserver.SQSQueueDriver"/>
+                <!-- <attribute name="Version" value="${version}"/> -->
+                <attribute name="Built-Date" value="${TODAY}"/>
+            </manifest>
+            <fileset dir="bin" includes="**/*.class" />
+            <fileset dir="resources" includes="**" />
+        </jar>
+        <echo message="jar built" />
+        <property name="jar.already.run" value="true" />
+    </target>
+    
+    <target name="test">
+       <!-- <java classname="edu.virginia.lib.sqsserver.SQSQueueDriver" failonerror="true" fork="yes">
+            <classpath refid="SQSReader.classpath"/>  
+        </java> -->
+    </target>
+</project>

@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagsDecl>
+  <namespace name="http://www.loc.gov/mods/v3">
+    <tagUsage name="abstract" occurs="20607" withid="0" context="mods">
+      <attUsage name="displayLabel" occurs="1856">
+        <valList>
+          <valItem value="Caption" occurs="907"/>
+          <valItem value="Description" occurs="949"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="accessCondition" occurs="10519" withid="0" context="mods | relatedItem">
+      <attUsage name="displayLabel" occurs="7545">
+        <valList>
+          <valItem value="Access to object" occurs="950"/>
+          <valItem value="Access to the Collection" occurs="6569"/>
+          <valItem value="Use and Reproduction" occurs="6"/>
+          <valItem value="Use of the Collection" occurs="20"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="10519">
+        <valList>
+          <valItem value="local rights statements" occurs="2067"/>
+          <valItem value="restrictionOnAccess" occurs="7519"/>
+          <valItem value="useAndReproduction" occurs="26"/>
+          <valItem value="use and reproduction" occurs="907"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="city" occurs="17748" withid="0" context="hierarchicalGeographic">
+      <attUsage name="valueURI" occurs="20">
+        <valList>
+          <valItem value="http://vocab.getty.edu/tgn/7013585" occurs="20"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="continent" occurs="949" withid="0" context="hierarchicalGeographic"/>
+    <tagUsage name="country" occurs="18697" withid="0" context="hierarchicalGeographic">
+      <attUsage name="valueURI" occurs="20">
+        <valList>
+          <valItem value="http://vocab.getty.edu/tgn/7012149" occurs="20"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="county" occurs="948" withid="0" context="hierarchicalGeographic"/>
+    <tagUsage name="dateCreated" occurs="77916" withid="0" context="originInfo">
+      <attUsage name="encoding" occurs="77916">
+        <valList>
+          <valItem value="edtf" occurs="77916"/>
+        </valList>
+      </attUsage>
+      <attUsage name="keyDate" occurs="33911">
+        <valList>
+          <valItem value="yes" occurs="33911"/>
+        </valList>
+      </attUsage>
+      <attUsage name="point" occurs="50465">
+        <valList>
+          <valItem value="end" occurs="25232"/>
+          <valItem value="start" occurs="25233"/>
+        </valList>
+      </attUsage>
+      <attUsage name="qualifier" occurs="2967">
+        <valList>
+          <valItem value="approximate" occurs="2680"/>
+          <valItem value="inferred" occurs="276"/>
+          <valItem value="questionable" occurs="11"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="dateIssued" occurs="2" withid="0" context="originInfo">
+      <attUsage name="encoding" occurs="2">
+        <valList>
+          <valItem value="edtf" occurs="2"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="detail" occurs="2290" withid="0" context="part">
+      <attUsage name="type" occurs="2290">
+        <valList>
+          <valItem value="issue" occurs="1396"/>
+          <valItem value="volume" occurs="894"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="digitalOrigin" occurs="34629" withid="0" context="physicalDescription"/>
+    <tagUsage name="extent" occurs="16501" withid="0" context="physicalDescription"/>
+    <tagUsage name="form" occurs="39739" withid="0" context="physicalDescription">
+      <attUsage name="authority" occurs="34221">
+        <valList>
+          <valItem value="aat" occurs="1231"/>
+          <valItem value="lcsh" occurs="2"/>
+          <valItem value="lctgm" occurs="7"/>
+          <valItem value="marccategory" occurs="32971"/>
+          <valItem value="tgm" occurs="14"/>
+          <valItem value="tgn" occurs="3"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="6748">
+        <valList>
+          <valItem value="material" occurs="1230"/>
+          <valItem value="technique" occurs="5518"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="genre" occurs="58159" withid="0" context="mods | relatedItem | subject">
+      <attUsage name="authority" occurs="40666">
+        <valList>
+          <valItem value="aat" occurs="23509"/>
+          <valItem value="lcsh" occurs="3"/>
+          <valItem value="lctgm" occurs="17154"/>
+        </valList>
+      </attUsage>
+      <attUsage name="authorityURI" occurs="20">
+        <valList>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials" occurs="20"/>
+        </valList>
+      </attUsage>
+      <attUsage name="displayLabel" occurs="16554">
+        <valList>
+          <valItem value="legacy set code" occurs="16554"/>
+        </valList>
+      </attUsage>
+      <attUsage name="valueURI" occurs="20">
+        <valList>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm007721" occurs="20"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="geographic" occurs="3742" withid="0" context="subject"/>
+    <tagUsage name="hierarchicalGeographic" occurs="18697" withid="0" context="subject"/>
+    <tagUsage name="identifier" occurs="246453" withid="0" context="mods | relatedItem">
+      <attUsage name="displayLabel" occurs="188872">
+        <valList>
+          <valItem value="Artifact Number" occurs="6"/>
+          <valItem value="Collection Accession Number" occurs="17110"/>
+          <valItem value="Digitization Services Archive Filename" occurs="26403"/>
+          <valItem value="Digitization Services Tracksys MasterFile ID" occurs="26403"/>
+          <valItem value="Digitization Services Tracksys Unit ID" occurs="26403"/>
+          <valItem value="File name" occurs="20"/>
+          <valItem value="Iris ID" occurs="948"/>
+          <valItem value="Legacy ID" occurs="907"/>
+          <valItem value="Legacy Tiff Name" occurs="948"/>
+          <valItem value="Master file ID" occurs="20"/>
+          <valItem value="Negative Number" occurs="16203"/>
+          <valItem value="Original pid" occurs="948"/>
+          <valItem value="Originating Collection" occurs="6559"/>
+          <valItem value="Prints Number" occurs="15819"/>
+          <valItem value="Retrieval ID" occurs="21"/>
+          <valItem value="Slide Call Number" occurs="948"/>
+          <valItem value="Special Collections legacy database record number" occurs="10684"/>
+          <valItem value="UVA Library Fedora Repository PID" occurs="15729"/>
+          <valItem value="UVa EAD ID" occurs="5518"/>
+          <valItem value="UVa Fine Arts Identifier" occurs="11036"/>
+          <valItem value="image PID" occurs="5518"/>
+          <valItem value="retireval ID" occurs="1"/>
+          <valItem value="retrieval ID" occurs="720"/>
+        </valList>
+      </attUsage>
+      <attUsage name="invalid" occurs="10684">
+        <valList>
+          <valItem value="yes" occurs="10684"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="246453">
+        <valList>
+          <valItem value="LegacyAccessionNumber" occurs="6559"/>
+          <valItem value="accessionNumber" occurs="32953"/>
+          <valItem value="barcode" occurs="1"/>
+          <valItem value="legacy" occurs="60008"/>
+          <valItem value="local" occurs="94984"/>
+          <valItem value="master file pid" occurs="18061"/>
+          <valItem value="metadata pid" occurs="18158"/>
+          <valItem value="pid" occurs="51948"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="internetMediaType" occurs="34628" withid="0" context="physicalDescription"/>
+    <tagUsage name="languageOfCataloging" occurs="34629" withid="0" context="recordInfo"/>
+    <tagUsage name="languageTerm" occurs="34629" withid="0" context="languageOfCataloging">
+      <attUsage name="authority" occurs="34629">
+        <valList>
+          <valItem value="iso639-2b" occurs="34628"/>
+          <valItem value="rfc3066" occurs="1"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="34629">
+        <valList>
+          <valItem value="code" occurs="34629"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="location" occurs="59134" withid="0" context="mods | relatedItem"/>
+    <tagUsage name="mods" occurs="34630" withid="0" context="modsCollection">
+      <attUsage name="version" occurs="34630">
+        <valList>
+          <valItem value="3.6" occurs="34630"/>
+        </valList>
+      </attUsage>
+      <attUsage name="xsi:schemaLocation" occurs="34630">
+        <valList>
+          <valItem
+            value="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd"
+            occurs="34630"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="modsCollection" occurs="1" withid="0">
+      <attUsage name="xsi:schemaLocation" occurs="1">
+        <valList>
+          <valItem
+            value="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd"
+            occurs="1"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="name" occurs="86492" withid="0" context="mods | relatedItem | subject">
+      <attUsage name="authority" occurs="83728">
+        <valList>
+          <valItem value="LC (Loth) ; VIRGO (Hodson)" occurs="2"/>
+          <valItem value="LC (Robinson); ULAN (Stewardson)" occurs="1"/>
+          <valItem value="ULAN" occurs="15"/>
+          <valItem value="ULAN (Eccardt) ; LC (Greatbatch)" occurs="2"/>
+          <valItem value="ULAN (Edgell) ; LC (Mote)" occurs="1"/>
+          <valItem value="ULAN (Parsons); LC (Dunkarton)" occurs="2"/>
+          <valItem value="ULAN (Wright) ; LC (Posselwhite)" occurs="2"/>
+          <valItem value="lcnaf" occurs="25"/>
+          <valItem value="local" occurs="326"/>
+          <valItem value="naf" occurs="83356"/>
+          <valItem value="ulan" occurs="29"/>
+        </valList>
+      </attUsage>
+      <attUsage name="authorityURI" occurs="40">
+        <valList>
+          <valItem value="http://id.loc.gov/authorities/names" occurs="40"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="85230">
+        <valList>
+          <valItem value="corporate" occurs="38388"/>
+          <valItem value="personal" occurs="46842"/>
+        </valList>
+      </attUsage>
+      <attUsage name="valueURI" occurs="2149">
+        <valList>
+          <valItem value="http://id.loc.gov/authorities/names/n2001090020" occurs="79"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2004118502" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2005054833" occurs="9"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2005054833.html" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2006096814" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2007164697" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2008033072" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2009038910" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2009183222" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2010054240" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n2013016658" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50011728" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50015693" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50016797" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50017577" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50032190" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50035639" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50048289" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50053979" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50069678" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50070302" occurs="13"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50080992" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n50083265" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/n77000424" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n78012819" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n78013271" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n78061774" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/n79053979" occurs="20"/>
+          <valItem value="http://id.loc.gov/authorities/names/n79055449" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n80014947" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n80075894" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n80122677" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n80153138" occurs="29"/>
+          <valItem value="http://id.loc.gov/authorities/names/n80153138.html" occurs="10"/>
+          <valItem value="http://id.loc.gov/authorities/names/n80160167" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n81008170" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/n81033649" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n81054202" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n81117179" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/n81140569" occurs="11"/>
+          <valItem value="http://id.loc.gov/authorities/names/n81143854" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n82029025" occurs="9"/>
+          <valItem value="http://id.loc.gov/authorities/names/n82047713" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n82059515" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n82097632" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n82103048" occurs="13"/>
+          <valItem value="http://id.loc.gov/authorities/names/n82164713" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n83030612" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n83073999" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n83184882" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n83220762" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n83227223" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/n83227323" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n84058477" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n84168483" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/n84183558" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85028378" occurs="9"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85042709" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85121703" occurs="9"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85145313" occurs="7"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85145313.html" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85188904" occurs="23"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85220112" occurs="6"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85250731" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85252610" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85257323" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85264738" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n85360399" occurs="17"/>
+          <valItem value="http://id.loc.gov/authorities/names/n86024541" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n86128529" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n87836445" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n87946553" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88059230" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88088901" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88115625" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88131588" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88172277" occurs="152"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88172638" occurs="6"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88277512" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88604837" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n88646991" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n89600267" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n90656402" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n90713429" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n92034314" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n92051903" occurs="16"/>
+          <valItem value="http://id.loc.gov/authorities/names/n92070619" occurs="7"/>
+          <valItem value="http://id.loc.gov/authorities/names/n93124968" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n94052503" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n94092755" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n94116998" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n95116719" occurs="151"/>
+          <valItem value="http://id.loc.gov/authorities/names/n96003024" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n96069901" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n96114880" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n96122238" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97859552" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97861804" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97862731" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97864894" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97866881" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97874125" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97874337" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/n97875068" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nb2008002424" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nb97057058" occurs="10"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2001003490" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2002016393" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2004016944" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2006066690" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2008111570" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2009041969" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2009153905" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2009160567" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2010051848" occurs="257"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2010059289" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2010161385" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2010164619" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2011151689" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/no2017034882" occurs="729"/>
+          <valItem value="http://id.loc.gov/authorities/names/no89015270" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/no94027701" occurs="23"/>
+          <valItem value="http://id.loc.gov/authorities/names/no94027716.html" occurs="17"/>
+          <valItem value="http://id.loc.gov/authorities/names/no96006025" occurs="10"/>
+          <valItem value="http://id.loc.gov/authorities/names/no97001892" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/no98074389" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/no98111389" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/no98122171" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/no99048395" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr00031885" occurs="58"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001003695" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001015560" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001026406" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001036764" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001040972" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001042619" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001043714" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001043879" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001044285" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001048152" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2001048489" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2002016261" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2002024328" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2002025274" occurs="6"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2002039809" occurs="6"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2004021103" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr2006025271" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr88002241" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr89009971" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr89014510" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr89018451" occurs="23"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr90013440" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr91017070" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr91018323" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr91023356" occurs="16"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr91030728" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92009982" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92009994" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92013866.html" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92014588" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92020585" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92029366" occurs="16"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92036071" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92040957" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92044327" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr92044335" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93003337" occurs="28"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93007174" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93028068" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93030173" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93032484" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93039405" occurs="21"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93045202" occurs="8"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr93051178" occurs="1"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr94003574" occurs="4"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr94004584" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr94016438" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr94039723" occurs="5"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr95028171" occurs="2"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr96030187" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr97031628" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr99037386" occurs="3"/>
+          <valItem value="http://id.loc.gov/authorities/names/nr99039257" occurs="2"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="namePart" occurs="129338" withid="0" context="name">
+      <attUsage name="type" occurs="64218">
+        <valList>
+          <valItem value="date" occurs="21474"/>
+          <valItem value="family" occurs="21372"/>
+          <valItem value="given" occurs="21372"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="nonSort" occurs="34608" withid="0" context="titleInfo"/>
+    <tagUsage name="note" occurs="48907" withid="0"
+      context="mods | physicalDescription | relatedItem">
+      <attUsage name="displayLabel" occurs="42921">
+        <valList>
+          <valItem value="Category" occurs="907"/>
+          <valItem value="Copy Negative" occurs="1874"/>
+          <valItem value="Group" occurs="907"/>
+          <valItem value="Local Note" occurs="1"/>
+          <valItem value="Signature" occurs="907"/>
+          <valItem value="Staff" occurs="15949"/>
+          <valItem value="Staff Note" occurs="15823"/>
+          <valItem value="condition" occurs="9352"/>
+          <valItem value="local" occurs="471"/>
+          <valItem value="plate size code" occurs="1"/>
+          <valItem value="size inches" occurs="10"/>
+          <valItem value="staff" occurs="12542"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="5932">
+        <valList>
+          <valItem value="admin" occurs="4955"/>
+          <valItem value="local" occurs="728"/>
+          <valItem value="provenance" occurs="249"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="number" occurs="2290" withid="0" context="detail"/>
+    <tagUsage name="originInfo" occurs="87315" withid="0" context="mods | relatedItem"/>
+    <tagUsage name="part" occurs="1801" withid="0" context="relatedItem"/>
+    <tagUsage name="physicalDescription" occurs="68335" withid="0" context="mods | relatedItem"/>
+    <tagUsage name="physicalLocation" occurs="37381" withid="0" context="location"/>
+    <tagUsage name="place" occurs="67909" withid="0" context="originInfo"/>
+    <tagUsage name="placeTerm" occurs="73429" withid="0" context="place">
+      <attUsage name="authority" occurs="5518">
+        <valList>
+          <valItem value="marccountry" occurs="5518"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="73417">
+        <valList>
+          <valItem value="code" occurs="5518"/>
+          <valItem value="text" occurs="67899"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="publisher" occurs="34631" withid="0" context="originInfo"/>
+    <tagUsage name="recordChangeDate" occurs="10474" withid="0" context="recordInfo">
+      <attUsage name="encoding" occurs="10474">
+        <valList>
+          <valItem value="iso8601" occurs="10474"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="recordContentSource" occurs="34629" withid="0" context="recordInfo">
+      <attUsage name="authority" occurs="23944">
+        <valList>
+          <valItem value="marcorg" occurs="23944"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="recordCreationDate" occurs="34629" withid="0" context="recordInfo">
+      <attUsage name="encoding" occurs="34629">
+        <valList>
+          <valItem value="edtf" occurs="20"/>
+          <valItem value="iso8601" occurs="10685"/>
+          <valItem value="w3cdtf" occurs="23924"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="recordInfo" occurs="34629" withid="0" context="mods"/>
+    <tagUsage name="recordOrigin" occurs="34629" withid="0" context="recordInfo"/>
+    <tagUsage name="relatedItem" occurs="93270" withid="0" context="mods">
+      <attUsage name="displayLabel" occurs="92321">
+        <valList>
+          <valItem value="Appears in" occurs="1886"/>
+          <valItem value="Digitized from" occurs="5518"/>
+          <valItem value="Original" occurs="33718"/>
+          <valItem value="Part of" occurs="51199"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="93270">
+        <valList>
+          <valItem value="host" occurs="57668"/>
+          <valItem value="original" occurs="33718"/>
+          <valItem value="series" occurs="1884"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="role" occurs="25587" withid="0" context="name"/>
+    <tagUsage name="roleTerm" occurs="40489" withid="0" context="role">
+      <attUsage name="authority" occurs="40489">
+        <valList>
+          <valItem value="marcrelator" occurs="40489"/>
+        </valList>
+      </attUsage>
+      <attUsage name="type" occurs="40489">
+        <valList>
+          <valItem value="code" occurs="25587"/>
+          <valItem value="text" occurs="14902"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="shelfLocator" occurs="20" withid="0" context="location"/>
+    <tagUsage name="state" occurs="18697" withid="0" context="hierarchicalGeographic">
+      <attUsage name="valueURI" occurs="20">
+        <valList>
+          <valItem value="http://vocab.getty.edu/tgn/2030538" occurs="20"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="subject" occurs="130285" withid="0" context="mods">
+      <attUsage name="authority" occurs="87719">
+        <valList>
+          <valItem value="aat" occurs="286"/>
+          <valItem value="fast" occurs="2"/>
+          <valItem value="lcsh" occurs="68678"/>
+          <valItem value="lctgm" occurs="25"/>
+          <valItem value="local" occurs="15"/>
+          <valItem value="mesh" occurs="14"/>
+          <valItem value="naf" occurs="2"/>
+          <valItem value="tgn" occurs="18697"/>
+        </valList>
+      </attUsage>
+      <attUsage name="authorityURI" occurs="47">
+        <valList>
+          <valItem value="http://id.loc.gov/authorities/subjects" occurs="20"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/" occurs="25"/>
+          <valItem value="http://id.worldcat.org/fast/" occurs="2"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="subTitle" occurs="2" withid="0" context="titleInfo"/>
+    <tagUsage name="title" occurs="77630" withid="0" context="titleInfo"/>
+    <tagUsage name="titleInfo" occurs="77630" withid="0" context="mods | relatedItem">
+      <attUsage name="supplied" occurs="1284">
+        <valList>
+          <valItem value="yes" occurs="1284"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="topic" occurs="114730" withid="0" context="subject">
+      <attUsage name="authority" occurs="2">
+        <valList>
+          <valItem value="lcsh" occurs="2"/>
+        </valList>
+      </attUsage>
+      <attUsage name="valueURI" occurs="27">
+        <valList>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm000098" occurs="1"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm000279" occurs="1"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm000764" occurs="1"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm000841" occurs="1"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm001405" occurs="2"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm002140" occurs="1"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm002413" occurs="1"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm002475" occurs="1"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm004246" occurs="2"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm004670" occurs="2"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm008700" occurs="2"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm009985" occurs="3"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm010299" occurs="6"/>
+          <valItem value="http://id.loc.gov/vocabulary/graphicMaterials/tgm010747" occurs="1"/>
+          <valItem value="http://id.worldcat.org/fast/1128924" occurs="2"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="typeOfResource" occurs="35358" withid="0" context="mods | relatedItem">
+      <attUsage name="collection" occurs="16">
+        <valList>
+          <valItem value="yes" occurs="16"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+    <tagUsage name="url" occurs="21733" withid="0" context="location">
+      <attUsage name="access" occurs="5529">
+        <valList>
+          <valItem value="object in context" occurs="5529"/>
+        </valList>
+      </attUsage>
+      <attUsage name="displayLabel" occurs="10686">
+        <valList>
+          <valItem value="Accessible index record displayed in VIRGO" occurs="10686"/>
+        </valList>
+      </attUsage>
+      <attUsage name="usage" occurs="5529">
+        <valList>
+          <valItem value="primary" occurs="5529"/>
+          <valItem value="primary display" occurs="1"/>
+        </valList>
+      </attUsage>
+    </tagUsage>
+  </namespace>
+</tagsDecl>

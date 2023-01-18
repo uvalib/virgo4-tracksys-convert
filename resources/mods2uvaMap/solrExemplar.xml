@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="originalMetadataType">MODS</field>
+    <field name="work_title"/>
+    <field name="keyDate">1920</field>
+    <field name="components">
+      <doc>
+        <field name="contentType">still image</field>
+        <field name="mediaType">computer</field>
+        <field name="carrierType">online resource</field>
+        <field name="title">Umbilical scissors</field>
+        <field name="genre">medical equipment</field>
+        <field name="abstractSummary">Two pairs of umbilical scissors. The metal is stamped with the
+          words "HASLAM GERMANY."</field>
+        <field name="digitalOrigin">born digital</field>
+        <field name="internetMediaType">image/jpeg</field>
+        <field name="note">local: Photographed by Claude Moore Health Sciences Library, Historical
+          Collections and Services staff.</field>
+        <field name="subjectTopic">Medical instruments and apparatus--Scissors and shears</field>
+        <field name="pubProdDist">The Rector and Visitors of the University of Virginia</field>
+        <field name="pubProdDistPlace">Charlottesville, Va.</field>
+        <field name="original">
+          <doc>
+            <field name="contentType">three dimensional object</field>
+            <field name="localIdentifier">artifacts00361 (retrieval ID)</field>
+            <field name="physDetails">metal</field>
+            <field name="physExtent">0.6 x 10.5 x 4.7 cm</field>
+            <field name="pubProdDistPlace">Germany</field>
+            <field name="dateCreated">1920</field>
+            <field name="note">provenance: Donated by Louis Rader</field>
+          </doc>
+        </field>
+        <field name="host">
+          <doc>
+            <field name="contentType">mixed material</field>
+            <field name="isCollection">yes</field>
+            <field name="title">University of Virginia Medical Artifacts Collection, The</field>
+            <field name="physLocation">Historical Collections &amp; Services, Claude Moore Health
+              Sciences Library, Charlottesville, Va.</field>
+            <field name="accessRestrict">An appointment must be made with historical collections
+              staff at the Claude Moore Health Sciences Library to view the physical artifact. There
+              are no restrictions on access to the digital image of the artifact.</field>
+          </doc>
+        </field>
+      </doc>
+    </field>
+  </doc>
+</add>
