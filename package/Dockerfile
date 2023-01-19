@@ -5,11 +5,12 @@
 FROM public.ecr.aws/docker/library/openjdk:8-jdk as builder
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install ant
 WORKDIR /build
-#COPY build.xml ./
-#COPY src ./src
-#COPY lib_solrmarc_install ./lib_solrmarc_install
-#COPY lib_aws ./lib_aws
-#RUN ant
+COPY build.xml ./
+COPY lib ./lib
+COPY lib_aws ./lib_aws
+COPY resources ./resources
+COPY src ./src
+RUN ant
 
 #
 # build the target container
@@ -41,9 +42,10 @@ CMD scripts/entry.sh
 COPY package/data/container_bash_profile /home/webservice/.profile
 COPY package/scripts/entry.sh $APP_HOME/scripts/entry.sh
 
-#COPY lib_aws $APP_HOME/lib_aws/
-#COPY lib_solrmarc_install $APP_HOME/lib_solrmarc_install/
-#COPY --from=builder /build/dist $APP_HOME/dist
+COPY lib $APP_HOME/lib/
+COPY lib_aws $APP_HOME/lib_aws/
+COPY resources $APP_HOME/resources/
+COPY --from=builder /build/dist $APP_HOME/dist
 
 # Ensure permissions are correct
 RUN chown -R webservice:webservice /home/webservice/.profile $APP_HOME && chmod 755 /home/webservice/.profile $APP_HOME/scripts/entry.sh
