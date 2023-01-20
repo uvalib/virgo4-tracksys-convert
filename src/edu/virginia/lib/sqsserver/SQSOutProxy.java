@@ -15,5 +15,6 @@ public abstract class SQSOutProxy
     public abstract int addDoc(MessageAndDoc document);
 
     public abstract int addDocs(Collection<MessageAndDoc> docQ);
-
+    
+    public abstract boolean markMessageProcessed(MessageAndDoc message);
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.apache.log4j.Logger;
 
+import edu.virginia.lib.imagepool.ModsIndexer;
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -24,6 +25,7 @@ public class SQSQueueDriver
     public final static String VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE = "VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE";
 //    public final static String VIRGO4_MARC_CONVERT_DELETE_QUEUE =               "VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_DELETE_QUEUE";
     public final static String VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET =     "VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET";
+    public final static String TRACKSYS_URL_BASE =                              "TRACKSYS_URL_BASE";
     public final static int VIRGO4_MARC_CONVERT_QUEUE_POLL_TIMEOUT = 20; // in seconds
 //    private boolean reconfigurable = false;
 //    private Properties indexSpecMap = null; 
@@ -34,7 +36,8 @@ public class SQSQueueDriver
     protected boolean multiThreaded = false;
     protected IndexerLoop indexer = null; 
     private SQSOutProxy sqsProxy;
-
+    private boolean debug = false;
+    
     private Object numIndexed;
 
     /**
@@ -258,12 +261,8 @@ public class SQSQueueDriver
         }
         catch (Exception e)
         {
-//            if (!indexer.viaInterrupt)
-//            {
-//                Runtime.getRuntime().removeShutdownHook(shutdownHook);
-//            }
-//            logger.fatal("ERROR: Error while invoking indexToSolr");
-//            logger.fatal(e);
+            logger.fatal("ERROR: Error while invoking indexToSolr");
+            logger.fatal(e);
         }
 
 //        endTime = System.currentTimeMillis();
@@ -304,6 +303,7 @@ public class SQSQueueDriver
         parser.accepts("sqs-out", "sqs queue to write solr docs to").withRequiredArg().ofType( String.class );
         parser.accepts("sqs-delete", "sqs queue to write ids to delete to").withRequiredArg().ofType( String.class );
         parser.accepts("s3", "s3 bucket to use for oversize records").withRequiredArg().ofType( String.class );
+        parser.accepts("tracksys-url", "URL to use to connect to tracksys program").withRequiredArg().ofType( String.class );
         parser.accepts("reconfig", "specifies that the indexer can be reconfigured at runtime, providing a mapping from data source name to index specification").withRequiredArg().ofType( String.class );
 //        if (System.getProperty("solrmarc.indexer.test.fire.method","undefined").equals("undefined"))
 //        {
@@ -313,7 +313,7 @@ public class SQSQueueDriver
 
     private void initializeFromOptions()
     {
-        String[] inputSource = new String[1];
+//        String[] inputSource = new String[1];
 //        String propertyFileAsURLStr = PropertyUtils.getPropertyFileAbsoluteURL(homeDirStrs, options.valueOf(readOpts), true, inputSource);
 //        logger.info("marcreader option is "+options.valueOf(readOpts));
 //        logger.info("propertyFileAsURLStr is "+propertyFileAsURLStr);
@@ -328,13 +328,25 @@ public class SQSQueueDriver
 //            System.exit(1);
 //        }
 //
-        String sqsOutQueue = getSqsParm(options, "sqs-out", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE);
+//        String sqsOutQueue = getSqsParm(options, "sqs-out", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE);
 //        reconfigurable = options.has("reconfig");
 //        if (reconfigurable) 
 //        {
 //            String reconfigFile = options.valueOf("reconfig").toString();
 //            indexSpecMap = PropertyUtils.loadProperties(ValueIndexerFactory.instance().getHomeDirs(), reconfigFile, false, null, null);
 //        }
+        debug = options.has("debug") ? true : false;
+
+        String tracksysURLBase = getSqsParm(options, "tracksys-url", TRACKSYS_URL_BASE);
+        if (tracksysURLBase != null) 
+        {
+            logger.info("Using "+ tracksysURLBase + " as the base URL to connect to Tracksys");
+            ModsIndexer.tracksysURLBase = tracksysURLBase;
+        }
+        else 
+        {
+            logger.info("Using default tracksys URL base");
+        }
         boolean multithread =  false; // sqsOutQueue != null && !options.has("debug") && !reconfigurable ? true : false;
         try
         {
@@ -441,18 +453,18 @@ public class SQSQueueDriver
     }
 
 
-    final static String [] solrmarcPropertyStrings = {
-            "solrmarc.indexer.chunksize",
-            "solrmarc.indexer.buffersize",
-            "solrmarc.indexer.threadcount",
-            "solrmarc.solrj.threadcount",
-            "solrmarc.track.solr.progress",
-            "solrmarc.terminate.on.marc.exception",
-            "solrmarc.output.redirect",
-            "solrmarc.indexer.test.fire.method",
-            "solrmarc.method.report",
-    };
-
+//    final static String [] solrmarcPropertyStrings = {
+//            "solrmarc.indexer.chunksize",
+//            "solrmarc.indexer.buffersize",
+//            "solrmarc.indexer.threadcount",
+//            "solrmarc.solrj.threadcount",
+//            "solrmarc.track.solr.progress",
+//            "solrmarc.terminate.on.marc.exception",
+//            "solrmarc.output.redirect",
+//            "solrmarc.indexer.test.fire.method",
+//            "solrmarc.method.report",
+//    };
+//
 //    private void configureReaderProps(String propertyFileURLStr) throws FileNotFoundException, IOException
 //    {
 //        List<String> propertyStringsToCopy = Arrays.asList(solrmarcPropertyStrings);

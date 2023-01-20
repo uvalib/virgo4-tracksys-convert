@@ -37,35 +37,30 @@ public class SQSXMLOutImpl extends SQSOutProxy
         queueUrl = aws_sqs.getQueueUrlForName(this.queueName, createQueueIfNotExists);
     }
 
-    public int addDoc(MessageAndDoc recDoc)
+    public int addDoc(MessageAndDoc messageAndDoc)
     {
-        String inputDoc = recDoc.getDocAsString();
-        String id = recDoc.getPid();
-        String source = recDoc.getSourceAttribute();
+        String inputDoc = messageAndDoc.getDocAsString();
+        String id = messageAndDoc.getPid();
+        String source = messageAndDoc.getSourceAttribute();
         SendMessageRequest message = new SendMessageRequest(queueUrl, inputDoc)
                 .addMessageAttributesEntry("id", new MessageAttributeValue().withDataType("String").withStringValue(id))
                 .addMessageAttributesEntry("source", new MessageAttributeValue().withDataType("String").withStringValue(source))
                 .addMessageAttributesEntry("type", new MessageAttributeValue().withDataType("String").withStringValue("application/xml"));
 
-        if (recDoc.hasAttribute("ignore-cache"))
+        if (messageAndDoc.hasAttribute("ignore-cache"))
         {
-        	String ignoreCacheStr = recDoc.getAttribute("ignore-cache");
+        	String ignoreCacheStr = messageAndDoc.getAttribute("ignore-cache");
             message.addMessageAttributesEntry( "ignore-cache", new MessageAttributeValue().withDataType("String").withStringValue(ignoreCacheStr));
         }
         aws_sqs.getSQS().sendMessage(message);
-        String messageReceiptHandle = null;
-        if (recDoc.getMessageReceiptHandle() != null)
-        {
-            messageReceiptHandle = recDoc.getMessageReceiptHandle();
-            aws_sqs.remove(id, messageReceiptHandle);
-        }
+        markMessageProcessed(messageAndDoc);
         return(1);
     }
 
     @Override
-    public int addDocs(Collection<MessageAndDoc> recDocList)
+    public int addDocs(Collection<MessageAndDoc> messageAndDocList)
     {
-        Iterator <MessageAndDoc> iter = recDocList.iterator();
+        Iterator <MessageAndDoc> iter = messageAndDocList.iterator();
         PushbackIterator<MessageAndDoc> pbIter = PushbackIterator.pushbackIterator(iter);
         int num = 0;
 //        int messageBatchSize;
@@ -148,11 +143,25 @@ public class SQSXMLOutImpl extends SQSOutProxy
 //                logger.warn("My computed batch size was "+ messageBatchSize, tooBig);
 //            }
 //        }
-        if (num < recDocList.size()) 
+        if (num < messageAndDocList.size()) 
         {
             logger.debug("Not all queued documents sent");
         }
         return(num);
+    }
+
+    @Override
+    public boolean markMessageProcessed(MessageAndDoc messageAndDoc)
+    {
+        String messageReceiptHandle = null;
+        String id = messageAndDoc.getPid();
+        if (messageAndDoc.getMessageReceiptHandle() != null)
+        {
+            messageReceiptHandle = messageAndDoc.getMessageReceiptHandle();
+            aws_sqs.remove(id, messageReceiptHandle);
+            return(true);
+        }
+        return(false);
     }
 
     private int getTotalMessageSize(String message, String batchId, String ... attributes)

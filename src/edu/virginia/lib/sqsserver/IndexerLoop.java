@@ -1,11 +1,14 @@
 package edu.virginia.lib.sqsserver;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 import org.apache.log4j.Logger;
 
 import com.amazonaws.services.sqs.model.Message;
 
+import edu.virginia.lib.imagepool.IndexingException;
 import edu.virginia.lib.imagepool.ModsIndexer;
 import edu.virginia.lib.imagepool.TracksysPidListIndexer;
 
@@ -21,11 +24,12 @@ public class IndexerLoop
     protected boolean isShutDown = false;
     protected Thread theReaderThread = null;
     protected int trackOverallProgress = -1;
+    protected Map<String, ModsIndexer>indexerMap = null;
     
     public IndexerLoop(SQSOutProxy output)
     {
         sqsProxy = output;
-        
+        indexerMap = new LinkedHashMap<String, ModsIndexer>();
     }
     
     
@@ -50,11 +54,24 @@ public class IndexerLoop
             logger.debug("message read : " + messageAndDoc.getPid());
 
 //            MessageAndDoc messageAndDoc = null;
-            getIndexDoc(messageAndDoc);
+            try {
+                getIndexDoc(messageAndDoc);
+            }
+            catch (IndexingException ie) {
+                logger.warn(ie.getMessage());
+                
+            }
+            catch (Exception e) {
+                logger.error(e.getMessage());
+            }
 
             if (messageAndDoc.getDoc() != null)
             {
                 outputSingleDocument(messageAndDoc);
+            }
+            else
+            {
+                markMessageRead(messageAndDoc);
             }
         }
 
@@ -80,6 +97,11 @@ public class IndexerLoop
     {
         sqsProxy.addDoc(messageAndDoc);        
     }
+    
+    private void markMessageRead(MessageAndDoc messageAndDoc)
+    {
+        sqsProxy.markMessageProcessed(messageAndDoc);        
+    }
 
     private void getIndexDoc(MessageAndDoc messageAndDoc) throws Exception
     {
@@ -89,17 +111,24 @@ public class IndexerLoop
         messageAndDoc.setDoc(bais);
     }
 
-
     private ModsIndexer getIndexerForMessage(MessageAndDoc messageAndDoc) throws Exception
     {
         String source = messageAndDoc.getSourceAttribute();
         ModsIndexer indexer = null;
-        if (source.equals("tracksys"))
-            indexer = new TracksysPidListIndexer(true);
+        if (indexerMap.containsKey(source))
+        {
+            indexer = indexerMap.get(source);
+        }
+        else 
+        {
+            if (source.equals("tracksys"))
+            {
+                indexer = new TracksysPidListIndexer(true);
+            }
+            indexerMap.put(source, indexer);
+        }
         return indexer;
     }
-
-
 
     public void endProcessing()
     {

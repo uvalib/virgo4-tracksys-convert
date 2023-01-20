@@ -31,6 +31,9 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.log4j.Logger;
+
+import net.sf.saxon.expr.instruct.TerminationException;
 
 /**
  * An abstract class that encapsulates all the shared methods used
@@ -39,10 +42,13 @@ import org.apache.http.client.methods.HttpGet;
  */
 public abstract class ModsIndexer extends AbstractIndexer {
     
+    private static Logger logger = Logger.getLogger(ModsIndexer.class);
+
     private boolean debug;
     
     private Transformer modsToUvaMap;
     private Transformer uvaMapToSolr;
+    public static String tracksysURLBase = "https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/"; 
     
     public ModsIndexer(boolean debug) throws TransformerConfigurationException {
         this.debug = debug;
@@ -50,7 +56,7 @@ public abstract class ModsIndexer extends AbstractIndexer {
         URIResolver r = new URIResolver() {
             @Override
             public Source resolve(String href, String base) throws TransformerException {
-                System.out.println("Resolving " + href);
+                logger.info("Resolving href " + href);
                 try {
                     // fetch the URL
                     URL url = new URL(href);
@@ -61,7 +67,7 @@ public abstract class ModsIndexer extends AbstractIndexer {
                     if (s != null) {
                         return new StreamSource(s);
                     } 
-                    System.err.println("Unable to parse " + href + " (base=" + base + ")");
+                    logger.error("Unable to parse " + href + " (base=" + base + ")");
                     throw new RuntimeException();
                     //return null;
                 } catch (IOException e) {
@@ -94,7 +100,7 @@ public abstract class ModsIndexer extends AbstractIndexer {
         final File resultFile = new File(processDir, timestamp + "-tracksys-solr-add-docs.xml");
         final List<File> files = new ArrayList<File>();
         for (String pid : pids) {
-            System.out.println("indexing " + pid);
+            logger.info("indexing " + pid);
             final File modsFile = getModsFileFromTracksys(pid, modsDir);
             final File uvaMapFile = createUVAMapFile(modsFile, uvamapDir, pid);
             final File solrFile = createSolrDocFile(uvaMapFile, solrDir, pid);
@@ -107,12 +113,32 @@ public abstract class ModsIndexer extends AbstractIndexer {
     
     public byte[] indexItem(String pid) throws Exception {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd-hhmm").format(new Date());
-        System.out.println("indexing " + pid + "  at timestamp " + timestamp);
-        final InputStream modsStream = getModsStreamFromTracksys(pid);
-        final InputStream uvaMapStream = createUVAMapStream(modsStream, pid);
+        logger.info("indexing " + pid + "  at timestamp " + timestamp);
+        InputStream modsStream = null;
+        try {
+            modsStream = getModsStreamFromTracksys(pid);
+        }
+        catch (Exception e)
+        {
+            throw new IndexingException(pid, IndexingException.IndexingPhase.GET_MODS, e); 
+        }
+        InputStream uvaMapStream;
+        try { 
+            uvaMapStream = createUVAMapStream(modsStream, pid);
+        }
+        catch (TerminationException te)
+        {
+            throw new IndexingException(pid, IndexingException.IndexingPhase.MAKE_UVAMAP, te);
+        }
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        createSolrDocStream(uvaMapStream, baos, pid);
+        try { 
+            createSolrDocStream(uvaMapStream, baos, pid);
+        }
+        catch (TerminationException te)
+        {
+            throw new IndexingException(pid, IndexingException.IndexingPhase.MAKE_SOLR, te);
+        }
         return baos.toByteArray();
     }
     
@@ -190,7 +216,7 @@ public abstract class ModsIndexer extends AbstractIndexer {
      */
     private File getModsFileFromTracksys(final String pid, final File modsDir) throws Exception {
         File modsFile = new File(modsDir, fixPidForFile(pid) + "-mods.xml");
-        final String url = "https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/" + pid + "?type=mods";
+        final String url =  tracksysURLBase + pid + "?type=mods";
         if (!modsFile.exists()) {
             HttpGet get = new HttpGet(new URI(url));
             CloseableHttpResponse response = getHttpClient().execute(get);
@@ -218,7 +244,7 @@ public abstract class ModsIndexer extends AbstractIndexer {
      * @return the MODS XML
      */
     private InputStream getModsStreamFromTracksys(final String pid) throws Exception {
-        final String url = "https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/" + pid + "?type=mods";
+        final String url = tracksysURLBase + pid + "?type=mods";
         InputStream result = null;
         HttpGet get = new HttpGet(new URI(url));
         CloseableHttpResponse response = getHttpClient().execute(get);

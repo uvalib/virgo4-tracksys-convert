@@ -800,13 +800,35 @@
         </field>
     </xsl:template>
 
-    <xsl:template match="field[@name = 'orig_identifier' and @type = 'Retrieval ID']">
-        <field name="retrieval_id_tsearchf_stored">
+    <xsl:template match="field[@name = 'orig_identifier']">
+        <field name="identifier_tsearch_stored">
             <xsl:value-of select="text()"/>
         </field>
         <field name="identifier_e_stored">
             <xsl:value-of select="text()"/>
         </field>
+        <xsl:choose>
+          <xsl:when test="@type = 'Retrieval ID'">
+            <field name="retrieval_id_tsearchf_stored">
+                <xsl:value-of select="text()"/>
+            </field>
+          </xsl:when>
+          <xsl:when test="@type = 'Negative Number'">
+            <field name="negative_number_e_stored">
+                <xsl:value-of select="text()"/>
+            </field>
+          </xsl:when>
+          <xsl:when test="@type = 'Collection AccessionNumber'">
+            <field name="collection_call_number_a">
+              <xsl:value-of select="text()"/>
+            </field>
+          </xsl:when>
+          <xsl:otherwise>
+            <field name="orig_identifier_e_stored">
+              <xsl:value-of select="text()"/>
+            </field>
+          </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="field[@name = 'orig_physExtent']">
@@ -838,30 +860,6 @@
             <xsl:value-of select="text()"/>
         </field>
     </xsl:template>
-
-    <xsl:template match="field[@name = 'orig_identifier']">
-        <field name="identifier_tsearch_stored">
-            <xsl:value-of select="text()"/>
-        </field>
-        <xsl:choose>
-          <xsl:when test="@type = 'Negative Number'">
-            <field name="negative_number_e_stored">
-                <xsl:value-of select="text()"/>
-            </field>
-          </xsl:when>
-          <xsl:when test="@type = 'Collection AccessionNumber'">
-            <field name="collection_call_number_a">
-              <xsl:value-of select="text()"/>
-            </field>
-          </xsl:when>
-          <xsl:otherwise>
-            <field name="orig_identifier_e_stored">
-              <xsl:value-of select="text()"/>
-            </field>
-          </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
 
     <xsl:template
         match="field[@name = 'host_identifier' and @type = 'Collection Accession Number']">
