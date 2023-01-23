@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.apache.log4j.Logger;
 
+import com.amazonaws.SdkBaseException;
+import com.amazonaws.SdkClientException;
+
 import edu.virginia.lib.imagepool.ModsIndexer;
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
@@ -352,9 +355,23 @@ public class SQSQueueDriver
         {
             this.configureOutput(options);
         }
+        catch (SdkClientException sce)
+        {
+            logger.fatal(sce.getMessage());
+            logger.fatal("Exiting...");
+            System.exit(4);
+            
+        }
+        catch (SdkBaseException sce)
+        {
+            logger.fatal(sce.getMessage());
+            logger.fatal("Exiting...");
+            System.exit(4);
+            
+        }
         catch (Exception sre)
         {
-            logger.debug("", sre);
+            logger.debug(sre.getMessage(), sre);
             logger.error("Exiting...");
             System.exit(6);
         }

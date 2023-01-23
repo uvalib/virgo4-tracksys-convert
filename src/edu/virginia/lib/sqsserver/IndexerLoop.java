@@ -59,7 +59,7 @@ public class IndexerLoop
             }
             catch (IndexingException ie) {
                 logger.warn(ie.getMessage());
-                
+                logger.warn("Marking message with id: "+messageAndDoc.getPid()+ " as processed even though no Solr doc will be sent");
             }
             catch (Exception e) {
                 logger.error(e.getMessage());

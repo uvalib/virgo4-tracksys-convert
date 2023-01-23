@@ -10,15 +10,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.transform.ErrorListener;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -29,11 +32,15 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.io.Charsets;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import net.sf.saxon.expr.instruct.TerminationException;
+import net.sf.saxon.lib.FeatureKeys;
+import net.sf.saxon.trans.XPathException;
 
 /**
  * An abstract class that encapsulates all the shared methods used
@@ -78,9 +85,11 @@ public abstract class ModsIndexer extends AbstractIndexer {
         
         SAXTransformerFactory f = (SAXTransformerFactory) TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", null);
         f.setURIResolver(r);
+        ErrorLogger logListener = new ErrorLogger();
+        f.setErrorListener(logListener);
+        f.setAttribute(FeatureKeys.MESSAGE_EMITTER_CLASS, ErrorLogger.class.getName());
         modsToUvaMap = f.newTemplates(new StreamSource(getClass().getClassLoader().getResourceAsStream("mods2uvaMAP.xsl"))).newTransformer();
         uvaMapToSolr = f.newTemplates(new StreamSource(getClass().getClassLoader().getResourceAsStream("uvamap2solr.xsl"))).newTransformer();
-
     }
     
 
