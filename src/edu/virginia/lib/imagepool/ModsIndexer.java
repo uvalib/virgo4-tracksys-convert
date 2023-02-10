@@ -127,9 +127,13 @@ public abstract class ModsIndexer extends AbstractIndexer {
         try {
             modsStream = getModsStreamFromTracksys(pid);
         }
+        catch (IndexingException e)
+        {
+            throw e; 
+        }
         catch (Exception e)
         {
-            throw new IndexingException(pid, IndexingException.IndexingPhase.GET_MODS, e); 
+            throw new IndexingException(pid, IndexingException.IndexingPhase.GET_MODS_UNK, e); 
         }
         InputStream uvaMapStream;
         try { 
@@ -272,8 +276,14 @@ public abstract class ModsIndexer extends AbstractIndexer {
                 baos.flush();
              
                 result = new ByteArrayInputStream(baos.toByteArray()); 
-            } else {
-                throw new Exception("Unexpected response: " + response.getStatusLine().getStatusCode() + "  " + response.getStatusLine().getReasonPhrase() + " (" + url + ")");
+            } 
+            else if (response.getStatusLine().getStatusCode() == 404)
+            {
+                throw new IndexingException(pid, IndexingException.IndexingPhase.GET_MODS_404, "Error 404: Page not found"); 
+            }
+            else 
+            {
+                throw new Exception("Unexpected response: " + response.getStatusLine().getStatusCode() + "  " + response.getStatusLine().getReasonPhrase() + " (" + url + ")");                
             }
         } finally {
             response.close();

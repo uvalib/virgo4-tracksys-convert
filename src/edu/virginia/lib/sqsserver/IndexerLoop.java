@@ -54,32 +54,41 @@ public class IndexerLoop
             logger.debug("message read : " + messageAndDoc.getPid());
 
 //            MessageAndDoc messageAndDoc = null;
+            boolean markMessageDone = false;
             try {
                 getIndexDoc(messageAndDoc);
             }
             catch (IndexingException ie) {
-                logger.warn(ie.getMessage());
-                logger.warn("Marking message with id: "+messageAndDoc.getPid()+ " as processed even though no Solr doc will be sent");
+                if (ie.getPhase() != IndexingException.IndexingPhase.GET_MODS_UNK)
+                {
+                    markMessageDone = true;
+                    logger.warn(ie.getMessage());
+                    logger.warn("Marking message with id: "+messageAndDoc.getPid()+ " as processed even though no Solr doc will be sent");
+                }
+                else
+                {
+                    logger.warn(ie.getMessage());
+                    logger.warn("Leaving message with id: "+messageAndDoc.getPid()+ " in queue, due to unknown, and unexpected error.");
+                }
             }
             catch (Exception e) {
                 logger.error(e.getMessage());
+                logger.warn("Leaving message with id: "+messageAndDoc.getPid()+ " in queue, due to unknown, and unexpected error.");
             }
 
             if (messageAndDoc.getDoc() != null)
             {
                 outputSingleDocument(messageAndDoc);
             }
-            else
+            else if (markMessageDone)
             {
                 markMessageRead(messageAndDoc);
             }
+            else
+            {
+                //  do nothing, leave message in queue and hope for better luck next time.
+            }
         }
-
-        if (shuttingDown)
-        {
-//            endProcessing();
-        }
-//        return (cnts);
     }
 
     private MessageAndDoc getRecord(SQSMessageReader reader)
