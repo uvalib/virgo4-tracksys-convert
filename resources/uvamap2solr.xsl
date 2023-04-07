@@ -535,6 +535,11 @@
                 <xsl:text>Elizabeth Meyer Barcelona Landscapes Collection</xsl:text>
              </field>
          </xsl:when>
+         <xsl:when test="$collection = 'The Cecil Lang Collection of Vanity Fair Illustrations'">
+             <field name="digital_collection_tsearchf_stored">
+                <xsl:text>The Cecil Lang Collection of Vanity Fair Illustrations</xsl:text>
+             </field>
+         </xsl:when>
             <xsl:otherwise>
               <xsl:comment>Skipping unapproved collection title: <xsl:value-of select="$collection" /></xsl:comment>
               <field name="text_tsearchf_stored"><xsl:value-of select="$collection" /></field>
@@ -709,12 +714,7 @@
         </field>
     </xsl:template>
     
-    <xsl:template match="field[@name = 'note']">
-        <field name="note_tsearch_stored">
-            <xsl:value-of select="text()"/>
-        </field>
-    </xsl:template>
-
+    <!-- 
     <xsl:template match="field[@name = 'note' and @displayLabel = 'Category']">
         <field name="vanity_fair_category_tsearchf_stored">
             <xsl:value-of select="text()"/>
@@ -731,6 +731,32 @@
         <field name="vanity_fair_signature_tsearchf_stored">
             <xsl:value-of select="text()"/>
         </field>
+    </xsl:template>
+-->
+
+    <xsl:template match="field[@name = 'note']">
+        <xsl:choose>
+            <xsl:when test="@displayLabel = 'Signature'" >
+                <field name="vanity_fair_signature_tsearchf_stored">
+                    <xsl:value-of select="text()"/>
+                </field>
+            </xsl:when>
+            <xsl:when test="@displayLabel = 'Group'" >
+                <field name="vanity_fair_group_tsearchf_stored">
+                    <xsl:value-of select="text()"/>
+                </field>
+            </xsl:when>
+            <xsl:when test="@displayLabel = 'Category'" >
+                <field name="vanity_fair_category_tsearchf_stored">
+                    <xsl:value-of select="text()"/>
+                </field>
+            </xsl:when>
+            <xsl:otherwise >
+                <field name="note_tsearch_stored">
+                    <xsl:value-of select="text()"/>
+                </field>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template match="field[@name = 'uri' and @displayLabel='ArtStorImageInContext']">
@@ -856,19 +882,21 @@
     </xsl:template>
 
     <xsl:template match="field[@name = 'host_identifier']">
-        <field name="collection_call_number_a">
-            <xsl:value-of select="text()"/>
-        </field>
-    </xsl:template>
-
-    <xsl:template
-        match="field[@name = 'host_identifier' and @type = 'Collection Accession Number']">
-        <field name="collection_call_number_tsearch_stored">
-            <xsl:value-of select="text()"/>
-        </field>
-        <field name="identifier_e_stored">
-            <xsl:value-of select="text()"/>
-        </field>
+        <xsl:choose>
+            <xsl:when test="@type = 'Collection Accession Number'" >
+                <field name="collection_call_number_tsearch_stored">
+                    <xsl:value-of select="text()"/>
+                </field>
+                <field name="identifier_e_stored">
+                    <xsl:value-of select="text()"/>
+                </field>
+            </xsl:when>
+            <xsl:otherwise>
+                <field name="collection_call_number_a">
+                    <xsl:value-of select="text()"/>
+                </field>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="field[@name = 'host_physLocation']">

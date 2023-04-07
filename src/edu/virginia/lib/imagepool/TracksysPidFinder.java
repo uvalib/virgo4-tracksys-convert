@@ -153,7 +153,7 @@ public class TracksysPidFinder {
     
     public List<String> getAllMetadataPids() throws Exception {
         final ArrayList<String> pids = new ArrayList<String>();     
-        HttpGet get = new HttpGet(new URI("https://tracksys.lib.virginia.edu/api/solr/?timestamp=0"));
+        HttpGet get = new HttpGet(new URI("https://tracksys-api-ws.internal.lib.virginia.edu/api/published/virgo?type=other"));
         CloseableHttpResponse response = client.execute(get);
         try {
             if (response.getStatusLine().getStatusCode() == 200) {

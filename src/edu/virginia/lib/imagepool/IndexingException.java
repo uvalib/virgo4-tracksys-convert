@@ -6,7 +6,7 @@ public class IndexingException extends RuntimeException
      * 
      */
     private static final long serialVersionUID = 7188833703331159675L;
-    public enum IndexingPhase { GET_MODS_404, GET_MODS_UNK, MAKE_UVAMAP, MAKE_SOLR };
+    public enum IndexingPhase { GET_MODS_404, GET_MODS_UNK, MAKE_UVAMAP, MAKE_SOLR, TRACKSYS_ENRICH};
     String id;
     IndexingPhase phase;
     Exception cause;
@@ -44,6 +44,7 @@ public class IndexingException extends RuntimeException
             case GET_MODS_UNK :     return("get_mods_unknown_error");
             case MAKE_UVAMAP :      return("mods_to_uvamap");
             case MAKE_SOLR :        return("uvamap_to_solr");
+            case TRACKSYS_ENRICH :  return("tracksys_enrich");
         }
         return("undefined");
     }

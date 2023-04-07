@@ -44,7 +44,7 @@ public class IndexerLoop
      *                indexed, and number of records sent to solr
      * @throws Exception 
      */
-    public void indexToSolr(final SQSMessageReader reader) throws Exception
+    public void indexToSolr(final MessageReader reader) throws Exception
     {
         theReaderThread = Thread.currentThread();
         while (!shuttingDown)
@@ -91,7 +91,7 @@ public class IndexerLoop
         }
     }
 
-    private MessageAndDoc getRecord(SQSMessageReader reader)
+    private MessageAndDoc getRecord(MessageReader reader)
     {
         MessageAndDoc result = null;
         if (reader.hasNext())

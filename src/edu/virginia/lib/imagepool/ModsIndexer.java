@@ -10,18 +10,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.transform.ErrorListener;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -32,15 +29,12 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.io.Charsets;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import net.sf.saxon.expr.instruct.TerminationException;
 import net.sf.saxon.lib.FeatureKeys;
-import net.sf.saxon.trans.XPathException;
 
 /**
  * An abstract class that encapsulates all the shared methods used
@@ -55,8 +49,9 @@ public abstract class ModsIndexer extends AbstractIndexer {
     
     private Transformer modsToUvaMap;
     private Transformer uvaMapToSolr;
+    //  Note the following assignment CAN BE OVERRIDDEN by code in SQSQueueDriver.InitializeFromOptions 
     public static String tracksysURLBase = "https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/"; 
-    
+
     public ModsIndexer(boolean debug) throws TransformerConfigurationException {
         this.debug = debug;
         
@@ -154,7 +149,7 @@ public abstract class ModsIndexer extends AbstractIndexer {
         }
         return baos.toByteArray();
     }
-    
+
     private File createSolrDocFile(final File uvamapFile, final File solrCacheDir, final String pid) throws Exception {
         FileInputStream fis = new FileInputStream(uvamapFile);
         final File solr = new File(solrCacheDir, fixPidForFile(pid) + "-solr.xml");

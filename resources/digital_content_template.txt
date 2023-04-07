@@ -1,0 +1,28 @@
+<{
+<  "id":"${CATKEY}",
+<  "parts": [
+=    {
+=      "iiif_manifest_url": "${MANIFEST}",
+=?${OEMBED}      "oembed_url": "${OEMBED}/${PID}",
+=?${OCR}      "ocr": {
+=?${OCR}        "urls": {
+=?${OCR}          "delete": "${OCR}/${PID}/delete",
+=?${OCR}          "download": "${OCR}/${PID}/text",
+=?${OCR}          "generate": "${OCR}/${PID}",
+=?${OCR}          "status": "${OCR}/${PID}/status"
+=?${OCR}        }
+=?${OCR}      },
+=?${PDF}      "pdf": {
+=?${PDF}        "urls": {
+=?${PDF}          "delete": "${PDF}/${PID}/delete",
+=?${PDF}          "download": "${PDF}/${PID}/download",
+=?${PDF}          "generate": "${PDF}/${PID}",
+=?${PDF}          "status": "${PDF}/${PID}/status"
+=?${PDF}        }
+=?${PDF}      },
+=      "pid": "${PID}",
+=      "thumbnail_url":"${THUMBNAIL}"
+=    }
+?    ,
+>  ]
+>}

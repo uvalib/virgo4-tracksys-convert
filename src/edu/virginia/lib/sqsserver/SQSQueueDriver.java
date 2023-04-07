@@ -1,7 +1,11 @@
 package edu.virginia.lib.sqsserver;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.Properties;
+
 import org.apache.log4j.Logger;
 
 import com.amazonaws.SdkBaseException;
@@ -29,17 +33,24 @@ public class SQSQueueDriver
 //    public final static String VIRGO4_MARC_CONVERT_DELETE_QUEUE =               "VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_DELETE_QUEUE";
     public final static String VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET =     "VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET";
     public final static String TRACKSYS_URL_BASE =                              "TRACKSYS_URL_BASE";
+    public final static String VIRGO4_TRACKSYS_ENRICH_OEMBED_ROOT = "VIRGO4_TRACKSYS_ENRICH_OEMBED_ROOT";
+    public final static String VIRGO4_TRACKSYS_ENRICH_OCR_ROOT = "VIRGO4_TRACKSYS_ENRICH_OCR_ROOT";
+    public final static String VIRGO4_TRACKSYS_ENRICH_S3_BUCKET = "VIRGO4_TRACKSYS_ENRICH_S3_BUCKET";
+    public final static String VIRGO4_TRACKSYS_ENRICH_DATA_URL = "VIRGO4_TRACKSYS_ENRICH_DATA_URL";
+    public final static String VIRGO4_TRACKSYS_ENRICH_PUBLISHED_URL = "VIRGO4_TRACKSYS_ENRICH_PUBLISHED_URL";
     public final static int VIRGO4_MARC_CONVERT_QUEUE_POLL_TIMEOUT = 20; // in seconds
-//    private boolean reconfigurable = false;
-//    private Properties indexSpecMap = null; 
-//    private String indexSpecName = null;
-    protected SQSMessageReader reader;
+    protected MessageReader reader;
     protected String[] args;
     protected OptionSet options = null;
     protected boolean multiThreaded = false;
     protected IndexerLoop indexer = null; 
     private SQSOutProxy sqsProxy;
     private boolean debug = false;
+    public static String DlMixin_Oembed_Root = "";
+    public static String DlMixin_OCR_Root = "";
+    public static String DlMixin_S3_BucketName = "";
+    public static String DlMixin_Enrich_Published_URL = "";
+    public static String DLMixin_Enrich_Data_URL = "";
     
     private Object numIndexed;
 
@@ -182,6 +193,12 @@ public class SQSQueueDriver
     {
         debug = options.has("debug") ? true : false;
 
+        DlMixin_Oembed_Root =  getSqsParm(options, "tracksys-cache-oembed-root", VIRGO4_TRACKSYS_ENRICH_OEMBED_ROOT);
+        DlMixin_OCR_Root =  getSqsParm(options, "tracksys-cache-ocr-root", VIRGO4_TRACKSYS_ENRICH_OCR_ROOT);
+        DlMixin_S3_BucketName = getSqsParm(options, "tracksys-cache-s3", VIRGO4_TRACKSYS_ENRICH_S3_BUCKET);
+        DlMixin_Enrich_Published_URL = getSqsParm(options, "tracksys-published-url", VIRGO4_TRACKSYS_ENRICH_PUBLISHED_URL);
+        DLMixin_Enrich_Data_URL = getSqsParm(options, "tracksys-enrich-data-url", VIRGO4_TRACKSYS_ENRICH_DATA_URL);
+
         String tracksysURLBase = getSqsParm(options, "tracksys-url", TRACKSYS_URL_BASE);
         if (tracksysURLBase != null) 
         {
@@ -218,13 +235,10 @@ public class SQSQueueDriver
             System.exit(6);
         }
         try {
-//            logger.info("Reading and compiling index specifications: " + specs);
-            /*if (multiThreaded) indexer = new ThreadedIndexer(indexers, solrProxy, bufferSize, chunkSize);
-            else     */          indexer = new IndexerLoop(sqsProxy);
+            indexer = new IndexerLoop(sqsProxy);
         }
         catch (Exception e1)
         {
-//            logger.error("Error opening or reading index configurations: " + specs, e1);
             logger.error("Exiting...");
             System.exit(2);
         }
@@ -247,7 +261,21 @@ public class SQSQueueDriver
         String sqsOutQueue = getSqsParm(options, "sqs-out", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE);
         String s3Bucket = getSqsParm(options, "s3", VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET);
 
-        if (sqsOutQueue != null)
+        if (sqsOutQueue.equals("stdout"))
+        {
+            try
+            {
+                PrintStream out = new PrintStream(System.out, true, "UTF-8");
+                System.setOut(out);
+                sqsProxy = new StdOutProxy(out);
+                sqsProxy = new SQSWrappedProxy(sqsProxy);
+            }
+            catch (UnsupportedEncodingException e)
+            {
+                // since the encoding is hard-coded, and is valid, this Exception cannot occur.
+            }
+        }
+        else if (sqsOutQueue != null)
         {
             logger.info("Opening output queue: "+ sqsOutQueue + ((s3Bucket != null) ? " (with S3 bucket: "+ s3Bucket + " )" : ""));
             sqsProxy = new SQSXMLOutImpl(sqsOutQueue, s3Bucket, false);

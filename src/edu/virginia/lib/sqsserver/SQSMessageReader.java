@@ -7,9 +7,8 @@ import org.apache.log4j.Logger;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 
-public class SQSMessageReader
+public class SQSMessageReader implements MessageReader
 {
-
     private String queueUrl = null;
     private String queueName; // = "virgo4-ingest-sirsi-inbound-staging";
    // private String s3BucketName; // = "virgo4-ingest-staging-messages";
