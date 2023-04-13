@@ -132,7 +132,7 @@ public class IndexerLoop
         {
             if (source.equals("tracksys"))
             {
-                indexer = new TracksysPidListIndexer(true);
+                indexer = new TracksysPidListIndexer(SQSQueueDriver.getModsIndexer_tracksysURLBase(), false);
             }
             indexerMap.put(source, indexer);
         }

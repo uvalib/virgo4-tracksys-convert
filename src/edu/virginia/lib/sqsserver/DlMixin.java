@@ -9,6 +9,7 @@ import javax.json.*;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.PutObjectResult;
 
 import edu.virginia.lib.imagepool.IndexingException;
 
@@ -34,8 +35,8 @@ public class DlMixin
 
     public DlMixin()
     {
-        enrichPublishedURL = SQSQueueDriver.DlMixin_Enrich_Published_URL;
-        enrichDataURL = SQSQueueDriver.DLMixin_Enrich_Data_URL;
+        enrichPublishedURL = SQSQueueDriver.getDlMixin_Enrich_Published_URL();
+        enrichDataURL = SQSQueueDriver.getDLMixin_Enrich_Data_URL();
         if (enrichPublishedURL != null && enrichPublishedURL.length() != 0 && 
                 enrichDataURL != null && enrichDataURL.length() != 0)
         {
@@ -318,7 +319,7 @@ public class DlMixin
 
     private String createDigitalContentCacheEntry(String id, JsonObject dlSummary, String templateFile) throws Exception
     {
-        String s3BucketName = SQSQueueDriver.DlMixin_S3_BucketName;
+        String s3BucketName = SQSQueueDriver.getDlMixin_S3_BucketName();
         String[] template = readTemplate(id, templateFile);
         String digitalContent = createMultiPidMetadataContent(id, dlSummary, template);
         if (digitalContent != null)
@@ -340,15 +341,20 @@ public class DlMixin
     private String storeCacheData(String digitalContent, String s3BucketName, String id)
     {
         logger.info("Uploading " + id + " to S3 bucket " + s3Bucket + s3BucketName + "...\n");
-        String urlStrWrite = s3UrlPrefix + s3BucketName + "/" + id;
+        // The below is the older PATH style url for an s3 object
+        String oldUrlStrWrite = s3UrlPrefix + s3BucketName + "/" + id;
+        // See:  https://stackoverflow.com/questions/7933458/how-to-format-a-url-to-get-a-file-from-amazon-s3
+        // This is the pattern for newer virtual host style url to s3 object
+        //  https://BUCKET.s3.amazonaws.com/FILE  
+        String urlStrWrite = "https://" + s3BucketName + ".s3.amazonaws.com/" + id;
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard().build();
         try
         {
-            s3.putObject(s3BucketName, id, digitalContent);
+            PutObjectResult result = s3.putObject(s3BucketName, id, digitalContent);
         }
         catch (AmazonServiceException e)
         {
-            System.err.println(e.getErrorMessage());
+            logger.error(e.getErrorMessage());
             return null;
         }
         return (urlStrWrite);
@@ -412,8 +418,8 @@ public class DlMixin
     private String createMultiPidMetadataContent(String catKey, JsonObject dlSummary, String[] template)
     {
         // build the dataset for the template generation
-        String oembed_Root = SQSQueueDriver.DlMixin_Oembed_Root;
-        String ocrRoot = SQSQueueDriver.DlMixin_OCR_Root;
+        String oembed_Root = SQSQueueDriver.getDlMixin_Oembed_Root();
+        String ocrRoot = SQSQueueDriver.getDlMixin_OCR_Root();
 
         StringBuilder sb = new StringBuilder();
         Map<String, String> valueMap = new LinkedHashMap<String, String>();

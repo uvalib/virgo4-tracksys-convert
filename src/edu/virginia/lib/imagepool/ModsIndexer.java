@@ -49,11 +49,11 @@ public abstract class ModsIndexer extends AbstractIndexer {
     
     private Transformer modsToUvaMap;
     private Transformer uvaMapToSolr;
-    //  Note the following assignment CAN BE OVERRIDDEN by code in SQSQueueDriver.InitializeFromOptions 
-    public static String tracksysURLBase = "https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/"; 
+    private String tracksysURLBase;  
 
-    public ModsIndexer(boolean debug) throws TransformerConfigurationException {
+    public ModsIndexer(String tracksysURLBase, boolean debug) throws TransformerConfigurationException {
         this.debug = debug;
+        this.tracksysURLBase = tracksysURLBase;
         
         URIResolver r = new URIResolver() {
             @Override

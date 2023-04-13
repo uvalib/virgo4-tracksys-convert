@@ -27,6 +27,7 @@ public class TracksysPidListIndexer extends ModsIndexer {
     private DlMixin dlmixin = null;
 
     public static void main(String args[]) throws Exception {
+        String tracksysURLBaseDefault = "https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/"; 
         File pidlistfile = new File(args[0]);
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(pidlistfile)));
         ArrayList<String> pids = new ArrayList<String>(); 
@@ -37,13 +38,13 @@ public class TracksysPidListIndexer extends ModsIndexer {
             }
         }
         
-        ModsIndexer indexer = new TracksysPidListIndexer(true);
+        ModsIndexer indexer = new TracksysPidListIndexer(tracksysURLBaseDefault, true);
         indexer.IndexItems(pids);
         reader.close();
     }
 
-    public TracksysPidListIndexer(boolean b) throws Exception {
-        super(b);
+    public TracksysPidListIndexer(String tracksysURLBase, boolean debug) throws Exception {
+        super(tracksysURLBase, debug);
         dlmixin = new DlMixin();
     }
     

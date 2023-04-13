@@ -181,7 +181,7 @@ public class TracksysPidFinder {
     }
     
     public JSONObject getItemMetadata(final String id) throws Exception {
-        return getJSONObjectResponse("https://tracksys.lib.virginia.edu/api/metadata/" + id + "?type=brief");
+        return getJSONObjectResponse("https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/" + id + "?type=brief");
     }
     
     public JSONObject getJSONObjectResponse(final String url) throws Exception {

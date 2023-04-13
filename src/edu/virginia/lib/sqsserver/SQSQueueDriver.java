@@ -33,6 +33,7 @@ public class SQSQueueDriver
 //    public final static String VIRGO4_MARC_CONVERT_DELETE_QUEUE =               "VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_DELETE_QUEUE";
     public final static String VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET =     "VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET";
     public final static String TRACKSYS_URL_BASE =                              "TRACKSYS_URL_BASE";
+    public static String tracksysURLBaseDefault = "https://tracksys-api-ws.internal.lib.virginia.edu/api/metadata/"; 
     public final static String VIRGO4_TRACKSYS_ENRICH_OEMBED_ROOT = "VIRGO4_TRACKSYS_ENRICH_OEMBED_ROOT";
     public final static String VIRGO4_TRACKSYS_ENRICH_OCR_ROOT = "VIRGO4_TRACKSYS_ENRICH_OCR_ROOT";
     public final static String VIRGO4_TRACKSYS_ENRICH_S3_BUCKET = "VIRGO4_TRACKSYS_ENRICH_S3_BUCKET";
@@ -46,11 +47,12 @@ public class SQSQueueDriver
     protected IndexerLoop indexer = null; 
     private SQSOutProxy sqsProxy;
     private boolean debug = false;
-    public static String DlMixin_Oembed_Root = "";
-    public static String DlMixin_OCR_Root = "";
-    public static String DlMixin_S3_BucketName = "";
-    public static String DlMixin_Enrich_Published_URL = "";
-    public static String DLMixin_Enrich_Data_URL = "";
+    private static String DlMixin_Oembed_Root = "";
+    private static String DlMixin_OCR_Root = "";
+    private static String DlMixin_S3_BucketName = "";
+    private static String DlMixin_Enrich_Published_URL = "";
+    private static String DLMixin_Enrich_Data_URL = "";
+    private static String ModsIndexer_tracksysURLBase = "";
     
     private Object numIndexed;
 
@@ -77,14 +79,44 @@ public class SQSQueueDriver
         logger = Logger.getLogger(SQSQueueDriver.class);
     }
 
+    public static String getDlMixin_Oembed_Root()
+    {
+        return DlMixin_Oembed_Root;
+    }
+
+    public static String getDlMixin_OCR_Root()
+    {
+        return DlMixin_OCR_Root;
+    }
+
+    public static String getDlMixin_S3_BucketName()
+    {
+        return DlMixin_S3_BucketName;
+    }
+
+    public static String getDlMixin_Enrich_Published_URL()
+    {
+        return DlMixin_Enrich_Published_URL;
+    }
+
+    public static String getDLMixin_Enrich_Data_URL()
+    {
+        return DLMixin_Enrich_Data_URL;
+    }
+
+    public static String getModsIndexer_tracksysURLBase()
+    {
+        return ModsIndexer_tracksysURLBase;
+    }
+
     public void initializeForJunitTest(String[] args)
     {
         processArgs(args, true);
         initializeFromOptions();
 
-        String inputQueueName = getSqsParm(options, "sqs-in", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_IN_QUEUE);
-        String sqsOutQueue = getSqsParm(options, "sqs-out", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE);
-        String s3BucketName = getSqsParm(options, "s3", VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET);
+        String inputQueueName = getSqsParm("inputQueueName", options, "sqs-in", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_IN_QUEUE);
+        String sqsOutQueue = getSqsParm("sqsOutQueue", options, "sqs-out", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE);
+        String s3BucketName = getSqsParm("s3BucketName", options, "s3", VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET);
         logger.info("Opening input queue: "+ inputQueueName + ((s3BucketName != null) ? " (with S3 bucket: "+ s3BucketName + " )" : ""));
         this.configureReader(inputQueueName, s3BucketName);
     }
@@ -147,8 +179,8 @@ public class SQSQueueDriver
         String[] awsLibDirStrs = {"lib_aws"};
         initializeFromOptions();
 
-        String inputQueueName = getSqsParm(options, "sqs-in", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_IN_QUEUE);
-        String s3BucketName = getSqsParm(options, "s3", VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET);
+        String inputQueueName = getSqsParm("inputQueueName", options, "sqs-in", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_IN_QUEUE);
+        String s3BucketName = getSqsParm("s3BucketName", options, "s3", VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET);
         logger.info("Opening input queue: "+ inputQueueName + ((s3BucketName != null) ? " (with S3 bucket: "+ s3BucketName + " )" : ""));
         this.configureReader(inputQueueName, s3BucketName);
 
@@ -183,9 +215,13 @@ public class SQSQueueDriver
     {
         parser.accepts("sqs-in", "sqs queue to read records from").withRequiredArg().ofType( String.class );
         parser.accepts("sqs-out", "sqs queue to write solr docs to").withRequiredArg().ofType( String.class );
-        parser.accepts("sqs-delete", "sqs queue to write ids to delete to").withRequiredArg().ofType( String.class );
         parser.accepts("s3", "s3 bucket to use for oversize records").withRequiredArg().ofType( String.class );
         parser.accepts("tracksys-url", "URL to use to connect to tracksys program").withRequiredArg().ofType( String.class );
+        parser.accepts("tracksys-enrich-published-url", "URL to query to determine whether an item can be \"enriched\"").withRequiredArg().ofType( String.class );
+        parser.accepts("tracksys-enrich-data-url", "base URL to query to retrieve data to use to \"enrich\" an item").withRequiredArg().ofType( String.class );
+        parser.accepts("tracksys-enrich-s3", "s3 bucket name to store tracksys cache record").withRequiredArg().ofType( String.class );
+        parser.accepts("tracksys-enrich-oembed-root", "base URL pattern for oembed entry in tracksys cache record").withRequiredArg().ofType( String.class );
+        parser.accepts("tracksys-enrich-ocr-root", "base URL pattern for OCR entries in tracksys cache record").withRequiredArg().ofType( String.class );
         parser.accepts("reconfig", "specifies that the indexer can be reconfigured at runtime, providing a mapping from data source name to index specification").withRequiredArg().ofType( String.class );
     }
 
@@ -193,20 +229,20 @@ public class SQSQueueDriver
     {
         debug = options.has("debug") ? true : false;
 
-        DlMixin_Oembed_Root =  getSqsParm(options, "tracksys-cache-oembed-root", VIRGO4_TRACKSYS_ENRICH_OEMBED_ROOT);
-        DlMixin_OCR_Root =  getSqsParm(options, "tracksys-cache-ocr-root", VIRGO4_TRACKSYS_ENRICH_OCR_ROOT);
-        DlMixin_S3_BucketName = getSqsParm(options, "tracksys-cache-s3", VIRGO4_TRACKSYS_ENRICH_S3_BUCKET);
-        DlMixin_Enrich_Published_URL = getSqsParm(options, "tracksys-published-url", VIRGO4_TRACKSYS_ENRICH_PUBLISHED_URL);
-        DLMixin_Enrich_Data_URL = getSqsParm(options, "tracksys-enrich-data-url", VIRGO4_TRACKSYS_ENRICH_DATA_URL);
+        DlMixin_Oembed_Root = getSqsParm("DlMixin_Oembed_Root", options, "tracksys-enrich-oembed-root", VIRGO4_TRACKSYS_ENRICH_OEMBED_ROOT);
+        DlMixin_OCR_Root = getSqsParm("DlMixin_OCR_Root", options, "tracksys-enrich-ocr-root", VIRGO4_TRACKSYS_ENRICH_OCR_ROOT);
+        DlMixin_S3_BucketName = getSqsParm("DlMixin_S3_BucketName", options, "tracksys-enrich-s3", VIRGO4_TRACKSYS_ENRICH_S3_BUCKET);
+        DlMixin_Enrich_Published_URL = getSqsParm("DlMixin_Enrich_Published_URL", options, "tracksys-enrich-published-url", VIRGO4_TRACKSYS_ENRICH_PUBLISHED_URL);
+        DLMixin_Enrich_Data_URL = getSqsParm("DLMixin_Enrich_Data_URL", options, "tracksys-enrich-data-url", VIRGO4_TRACKSYS_ENRICH_DATA_URL);
 
-        String tracksysURLBase = getSqsParm(options, "tracksys-url", TRACKSYS_URL_BASE);
-        if (tracksysURLBase != null) 
+        ModsIndexer_tracksysURLBase = getSqsParm("tracksysURLBase", options, "tracksys-url", TRACKSYS_URL_BASE, tracksysURLBaseDefault);
+        if (ModsIndexer_tracksysURLBase != null) 
         {
-            logger.info("Using "+ tracksysURLBase + " as the base URL to connect to Tracksys");
-            ModsIndexer.tracksysURLBase = tracksysURLBase;
+            logger.info("Using "+ ModsIndexer_tracksysURLBase + " as the base URL to connect to Tracksys");
         }
         else 
         {
+            ModsIndexer_tracksysURLBase = tracksysURLBaseDefault;
             logger.info("Using default tracksys URL base");
         }
         boolean multithread =  false; // sqsOutQueue != null && !options.has("debug") && !reconfigurable ? true : false;
@@ -244,11 +280,40 @@ public class SQSQueueDriver
         }
     }
 
-    private String getSqsParm(OptionSet options, String clOptName, String propertyOrEnvName)
+    private String getSqsParm(String variableName, OptionSet options, String clOptName, String propertyOrEnvName, String defaultValue)
     {
-        return (options.has(clOptName) ? options.valueOf(clOptName).toString() : 
-            System.getProperty(propertyOrEnvName)!= null ?  System.getProperty(propertyOrEnvName) :
-                System.getenv(propertyOrEnvName));
+        String retVal;
+        if (options.has(clOptName))
+        {
+            retVal = options.valueOf(clOptName).toString();
+            logger.info("Assigning value for "+variableName+" from command-line-option "+clOptName+" ( = "+retVal+" )"); 
+        }
+        else if (System.getProperty(propertyOrEnvName) != null)
+        {
+            retVal = System.getProperty(propertyOrEnvName);
+            logger.info("Assigning value for "+variableName+" from System property "+propertyOrEnvName+" ( = "+retVal+" )"); 
+        }
+        else if (System.getenv(propertyOrEnvName) != null)
+        {
+            retVal = System.getenv(propertyOrEnvName);
+            logger.info("Assigning value for "+variableName+" from Environment variable "+propertyOrEnvName+" ( = "+retVal+" )"); 
+        }
+        else if (defaultValue != null)
+        {
+            retVal = defaultValue;
+            logger.info("Assigning value for "+variableName+" from default value ( = "+retVal+" )"); 
+        }
+        else
+        {
+            retVal = null;
+            logger.info("Assigning null to "+variableName); 
+        }
+        return retVal;
+    }
+    
+    private String getSqsParm(String variableName, OptionSet options, String clOptName, String propertyOrEnvName)
+    {
+        return  getSqsParm(variableName, options, clOptName, propertyOrEnvName, null);
     }
 
     private void configureReader(String inputQueueName, String s3BucketName)
@@ -258,8 +323,8 @@ public class SQSQueueDriver
 
     protected void configureOutput(OptionSet options)
     {
-        String sqsOutQueue = getSqsParm(options, "sqs-out", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE);
-        String s3Bucket = getSqsParm(options, "s3", VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET);
+        String sqsOutQueue = getSqsParm("sqsOutQueue", options, "sqs-out", VIRGO4_INGEST_IMAGE_TRACKSYS_CONVERT_OUT_QUEUE);
+        String s3Bucket = getSqsParm("s3Bucket", options, "s3", VIRGO4_TRACKSYS_CONVERT_SQS_MESSAGE_BUCKET);
 
         if (sqsOutQueue.equals("stdout"))
         {
