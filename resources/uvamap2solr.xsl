@@ -825,7 +825,13 @@
             <xsl:value-of select="text()"/>
         </field>
     </xsl:template>
-
+    
+    <xsl:template match="field[@name = 'contentAdvisory']">
+        <field name="content_advisory_tsearch_stored">
+            <xsl:value-of select="text()"/>
+        </field>
+    </xsl:template>
+    
     <xsl:template match="field[@name = 'orig_identifier']">
         <field name="identifier_tsearch_stored">
             <xsl:value-of select="text()"/>

@@ -1551,7 +1551,19 @@
       </field>
     </xsl:if>
   </xsl:template>
-
+  
+  <!-- summary of the content of the resource -->
+  <xsl:template match="*:abstract[@type='Content advice']" mode="uvaMAP">
+    <xsl:variable name="fieldName">
+      <xsl:call-template name="whereAmI"/>
+      <xsl:text>contentAdvisory</xsl:text>
+    </xsl:variable>
+    <field name="{$fieldName}">
+      <xsl:apply-templates select="@displayLabel" mode="uvaMAP"/>
+      <xsl:value-of select="normalize-space(.)"/>
+    </field>
+  </xsl:template>
+  
   <!-- summary of the content of the resource -->
   <xsl:template match="*:abstract" mode="uvaMAP">
     <xsl:variable name="fieldName">
